@@ -1,11 +1,3 @@
-# Training_oop-1
-# CRUD Sederhana
-
-pada hari ini saya melanjutkan pembelajaran mengenai oop dan melajutkan pembuatan project crud sederhana menggunakan Html dan js untuk hari ini saya membuat dua menu yaitu menu register dan juga menu login. 
-
-# Register
-untuk register yang saya buat sudah menerapkan konsep oop dari js dan juga telah menggunakan penyimpanan data berbasis local storage.
-
 // Registrasi    
 let formRegis = document.getElementById("Register")
     formRegis.addEventListener("submit", (e)=>{
@@ -31,8 +23,6 @@ let formRegis = document.getElementById("Register")
             
     })
 
-disini adalah kode js untuk menambahkan data baru dimana data yang diinputkan disini terdapat email, username dan password setelah disubmit akan mengambil data local storage yang sudah ada kemudian ditambahkan dengan yang baru kemudian dikembalikan kembali ke local storage setelah proses nya selesai maka akan melakukan reset form tegister dengan sendirinya.
-
 function display() {
     //localStorage.setItem('users', InputDeviceInfo.value);
     console.log("check",localStorage.getItem("users"));
@@ -55,8 +45,21 @@ function display() {
     })
 }
 display();
+// Registrasi 
 
-disini juga terdapat sebuah code yang dimana fungsinya untuk menampilkan data register yang sudah tersimpan di local storage.
+// Login
+const loginForm = document.getElementById('loginform');
 
-# Login 
-untuk fitur login sendiri masih dalam tahap pembuatan masih belum selsai hehe
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username === 'username' && password === 'password') {
+            alert('login sukses');
+    }else{
+        alert('username atau password salah');
+    }
+});
+// Login

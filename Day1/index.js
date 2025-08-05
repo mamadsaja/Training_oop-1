@@ -27,68 +27,68 @@ class Dosen {
 let dosen1 = new Dosen('zaki');
 dosen1.nama = 'muhammad <br/>';
 document.write(`Nama Dosen : ${dosen1.nama}`)
-// dosen1.halo();
+dosen1.halo();
 
 
 // Inheritens atau pewarisan 
-// class Hewan {
-//     static habitat = 'darat';
-//     constructor(nama) {
-//         this.nama = nama;
-//     }
-//     // Menthod 
-//     Jalan() {
-//         document.write(`${this.nama} berjalan`);
-//     }
-//     static berhenti() {
-//         document.write('<br/> Hewan melakukan rem depan')
-//     }
-// }
+class Hewan {
+    static habitat = 'darat';
+    constructor(nama) {
+        this.nama = nama;
+    }
+    // Menthod 
+    Jalan() {
+        document.write(`${this.nama} berjalan`);
+    }
+    static berhenti() {
+        document.write('<br/> Hewan melakukan rem depan')
+    }
+}
 
-// class Burung extends Hewan {
-//     constructor(nama, warna) {
-//         super(nama);
-//         this.warna = warna;
+class Burung extends Hewan {
+    constructor(nama, warna) {
+        super(nama);
+        this.warna = warna;
         
-//     }
-//     Terbang() {
-//         document.write(`${this.nama} Terbang`);
-//     }
-//     Jalan() {
-//         super.Jalan();
-//         document.write(`<br/>`);
-//         document.write(`${this.nama} berwarna ${this.warna} sedang Berlari <br/>`); //Overrding constructor
-//         this.Terbang();
+    }
+    Terbang() {
+        document.write(`${this.nama} Terbang`);
+    }
+    Jalan() {
+        super.Jalan();
+        document.write(`<br/>`);
+        document.write(`${this.nama} berwarna ${this.warna} sedang Berlari <br/>`); //Overrding constructor
+        this.Terbang();
 
-//     }
-// }
+    }
+}
 
-// // let elang = new Burung('Burung Elang', 'Ireng');
-// // elang.Jalan();
-// // document.write(Hewan.habitat);
-// // Hewan.berhenti();
-// document.write(Burung.habitat);
-// Burung.berhenti();
+// let elang = new Burung('Burung Elang', 'Ireng');
+// elang.Jalan();
+// document.write(Hewan.habitat);
+// Hewan.berhenti();
+document.write(Burung.habitat);
+Burung.berhenti();
 
 // private and protected
-// class Counter {
-//     #count = 0; 
-//     #increment() {
-//         return this.#count++;
-//     }
-//     getIncrement() {
-//         this.#increment();
-//     }
-//     getCount() {
-//         return this.#count;
-//     }
-// }
+class Counter {
+    #count = 0; 
+    #increment() {
+        return this.#count++;
+    }
+    getIncrement() {
+        this.#increment();
+    }
+    getCount() {
+        return this.#count;
+    }
+}
 
-// let counter = new Counter();
-// counter.getIncrement();
-// counter.getIncrement();
-// // counter.count = 1000;
-// document.write(`Count berisi ${counter.getCount()}`);
+let counter = new Counter();
+counter.getIncrement();
+counter.getIncrement();
+// counter.count = 1000;
+document.write(`Count berisi ${counter.getCount()}`);
 
 class kampus {
     constructor(nama, matkul) {
@@ -112,32 +112,30 @@ data1.Dosen();
 let data2 = new donatur('zidan');
 data2.mahasiswa();
 
-
-
 class TraficLight {
-    constructor(warna){
-        console.log(`warna lampu ${warna}`);
-        this._warna = warna
+    constructor(warna) {
+        this._warna = warna || "merah"; 
+        console.log(`warna lampu ${this._warna}`);
     }
 
-    get(){
-        let warnabaru;
-        warnabaru = this._warna
-        return warnabaru;
+    get warna() {
+        return this._warna;
     }
 
-    set(val){
-        if(val){
-            alert('Lampu jalan telah mati');
-            return;
+    set warna(val) {
+        if (!val) {
+            console.warn("jika warna tidak diisi maka default merah");
+            this._warna = "merah";
+        } else {
+            this._warna = val;
         }
-        this._warna = val
     }
 }
 
-let color = new TraficLight('merah');
-color.warna = 'hijau';
-document.write(`<br/>Warna lampu : ${color.warna}`)
+let color = new TraficLight(); 
+color.warna = ''; 
+document.write(`<br/>Warna lampu : ${color.warna}`);
+
 
 class person {
     name;
