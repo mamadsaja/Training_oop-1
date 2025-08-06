@@ -37,10 +37,11 @@
 
             const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-            const founderUser = users.find(user => user.username === usernameInput && user.password === passwordInput);
+            const founderUser = existingUsers.find(user => user.username === username && user.password === password);
 
             if(founderUser){
                 alert("login sukses");
+                window.location.href = "../index.html"
             }else{
                 alert("username atau password salah");
             }

@@ -1,62 +1,12 @@
 # Training_oop-1
 # CRUD Sederhana
+pada hari ini saya melanjutkan progres pembuatan crud mengenai blog untuk crud nya sendiri saya menggunakan html dan js, untuk progres dari crud nya sudah selesai dengan melengkapi sisa fitur dari progres sebelumnya yang terdiri dari login, upload blog baru, menampilkan blog, edit blog, dan hapus blog. 
 
-pada hari ini saya melanjutkan pembelajaran mengenai oop dan melajutkan pembuatan project crud sederhana menggunakan Html dan js untuk hari ini saya membuat dua menu yaitu menu register dan juga menu login. 
+# Materi yang dipelajari 
+- DOM Struktur 
+- Cache 
+- typscript 
 
-# Register
-untuk register yang saya buat sudah menerapkan konsep oop dari js dan juga telah menggunakan penyimpanan data berbasis local storage.
+# Rencana kedepannya
+melanjutkan pembelajaran mengenai typescript dan membuat sebuah crud menggunakan typescript. 
 
-// Registrasi    
-let formRegis = document.getElementById("Register")
-    formRegis.addEventListener("submit", (e)=>{
-        e.preventDefault()
-            
-        const email = document.getElementById("email").value;
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-        const newUser = {
-            email: email,
-            username: username,
-            password: password,
-        }
-
-        existingUsers.push(newUser);
-        localStorage.setItem("users", JSON.stringify(existingUsers));
-        document.getElementById("Register").reset();
-            
-        alert("sukses")
-            
-    })
-
-disini adalah kode js untuk menambahkan data baru dimana data yang diinputkan disini terdapat email, username dan password setelah disubmit akan mengambil data local storage yang sudah ada kemudian ditambahkan dengan yang baru kemudian dikembalikan kembali ke local storage setelah proses nya selesai maka akan melakukan reset form tegister dengan sendirinya.
-
-function display() {
-    //localStorage.setItem('users', InputDeviceInfo.value);
-    console.log("check",localStorage.getItem("users"));
-
-    const users = JSON.parse(localStorage.getItem("users"));
-    const bodytable = document.getElementById("bodytable");
-    users.map(function(user){
-        // console.log(user.email);
-        bodytable.innerHTML += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        ${user.email}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        ${user.username}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        ${user.password}
-                                    </td>
-                                </tr>`
-    })
-}
-display();
-
-disini juga terdapat sebuah code yang dimana fungsinya untuk menampilkan data register yang sudah tersimpan di local storage.
-
-# Login 
-untuk fitur login sendiri masih dalam tahap pembuatan masih belum selsai hehe

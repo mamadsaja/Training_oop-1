@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- <p>halo disini adalah halaman untuk upload</p> -->
+    <div class="m-10">
+        <div class="border rounded-lg h-full p-10">
+            <div class="flex justify-between items-center">
+                <p class="text-4xl font-bold">Upload</p>
+                <a href="index.html" class="font-medium">Kembali</a>
+            </div>
+                <form action="" id="Upload">
+                    <label for="message" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Title</label>
+                    <input type="title" name="title" id="title" aria-describedby="helper-text-explanation" class="bg-white border border-black text-black text-md rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-gray-500 dark:text-black dark:focus:ring-black dark:focus:border-black" placeholder="your title...">
+
+                    <label for="message" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Your blog</label>
+                    <textarea id="blog" name="blog" type="blog" rows="4" class="block p-2.5 w-full text-md text-black bg-white rounded-lg border border-black focus:ring-black focus:border-black" placeholder="Write your thoughts here..."></textarea>
+                    
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-10">Upload</button>    
+                </form>
+            </div>  
+        </div>  
+    </div>
+
+    <script>
+        let uploadBlog = document.getElementById("Upload")
+            uploadBlog.addEventListener("submit", (e)=>{
+                e.preventDefault()
+
+                const title = document.getElementById("title").value;
+                const blog = document.getElementById("blog").value;
+
+                const existingBlog = JSON.parse(localStorage.getItem("Blog")) || [];
+
+                let newId = 1;
+                if (existingBlog.length > 0) {
+                    const lastId = Math.max(...existingBlog.map(b => b.id || 0));
+                    newId = lastId + 1;
+                }
+
+                const newBlog ={
+                    id: newId,
+                    title: title,
+                    blog: blog,
+                }
+
+                existingBlog.push(newBlog);
+                localStorage.setItem("Blog", JSON.stringify(existingBlog));
+                document.getElementById("Upload").reset();
+
+                alert("berhasil menambahkan blog");
+            })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Edit Blog</title>
+</head>
+<body>
+    <div class="m-10">
+        <div class="border rounded-lg h-full p-10">
+            <div class="flex justify-between items-center">
+                <p class="text-4xl font-bold">Edit</p>
+                <a href="index.html" class="font-medium">Kembali</a>
+            </div>
+            <div id="formEdit">
+                <form action="" id="editform">
+                    <label for="editTitle" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Title</label>
+                    <input type="text" name="editTitle" id="editTitle" aria-describedby="helper-text-explanation" class="bg-white border border-black text-black text-md rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-gray-500 dark:text-black dark:focus:ring-black dark:focus:border-black" placeholder="your title...">
+
+                    <label for="editBlog" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Your blog</label>
+                    <textarea id="editBlog" name="editBlog" rows="4" class="block p-2.5 w-full text-md text-black bg-white rounded-lg border border-black focus:ring-black focus:border-black" placeholder="Write your thoughts here..."></textarea>
+                    
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-10">Update</button>    
+                </form>
+            </div>  
+        </div>  
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const blogs = JSON.parse(localStorage.getItem("Blog")) || [];
+            const editId = localStorage.getItem("editId");
+
+            console.log("Edit ID:", editId);
+            console.log("Blogs:", blogs);
+
+            const blogToEdit = blogs.find(b => b.id == editId);
+
+            if (blogToEdit) {
+                document.getElementById("editTitle").value = blogToEdit.title;
+                document.getElementById("editBlog").value = blogToEdit.blog;
+                console.log("Blog ditemukan :", blogToEdit);
+            } else {
+                console.log("Blog tidak ditemukan");
+                alert("Blog tidak ditemukan!");
+                window.location.href = "index.html";
+                return;
+            }
+
+            document.getElementById("editform").addEventListener("submit", function (e) {
+                e.preventDefault();
+                console.log("Form submitted");
+                
+                const newTitle = document.getElementById("editTitle").value.trim();
+                const newBlog = document.getElementById("editBlog").value.trim();
+                
+                if (!newTitle || !newBlog) {
+                    alert("Title dan blog tidak boleh kosong!");
+                    return;
+                }
+                
+                if (blogToEdit) {
+                    blogToEdit.title = newTitle;
+                    blogToEdit.blog = newBlog;
+                    
+                    const updatedBlogs = blogs.map(b => (b.id == editId ? blogToEdit : b));
+                    
+                    console.log("Updated blogs array:", updatedBlogs);
+                    
+                    localStorage.setItem("Blog", JSON.stringify(updatedBlogs));
+                    localStorage.removeItem("editId");
+                    
+                    alert("Blog berhasil diupdate!");
+                    console.log("Redirecting to index.html");
+                    window.location.href = "index.html";
+                } else {
+                    alert("Blog tidak ditemukan!");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
