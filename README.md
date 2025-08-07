@@ -1,12 +1,14 @@
 # Training_oop-1
 # CRUD Sederhana
-pada hari ini saya melanjutkan progres pembuatan crud mengenai blog untuk crud nya sendiri saya menggunakan html dan js, untuk progres dari crud nya sudah selesai dengan melengkapi sisa fitur dari progres sebelumnya yang terdiri dari login, upload blog baru, menampilkan blog, edit blog, dan hapus blog. 
+pada hari ini saya melanjutkan progress di crud dimana saya menambahkan beberapa kekurangan dan melakukan sedikit finishing seperti menambahkan form validator dan memperbaiki sebuah bag pada edit blog. kemudian mempelajari dasar penggunaan tipe data pada typescript
+
+# Progress Hari Ini
+Hari ini saya melakukan perbaikan pada fitur edit blog, khususnya pada validasi form. Validator form kini sudah lebih baik, memberikan validasi dan form validator pada login regis dan form edit blog. Selain itu, saya juga memperbaiki pesan notifikasi.
 
 # Materi yang dipelajari 
-- DOM Struktur 
-- Cache 
+- form validator
 - typscript 
 
 # Rencana kedepannya
-melanjutkan pembelajaran mengenai typescript dan membuat sebuah crud menggunakan typescript. 
+Melanjutkan typesript
 

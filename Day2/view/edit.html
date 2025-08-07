@@ -17,9 +17,11 @@
                 <form action="" id="editform">
                     <label for="editTitle" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Title</label>
                     <input type="text" name="editTitle" id="editTitle" aria-describedby="helper-text-explanation" class="bg-white border border-black text-black text-md rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-gray-500 dark:text-black dark:focus:ring-black dark:focus:border-black" placeholder="your title...">
+                    <div id="editTitleError" class="hidden text-red-600 text-sm mt-1">Title harus diisi dan minimal 3 karakter</div>
 
                     <label for="editBlog" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Your blog</label>
                     <textarea id="editBlog" name="editBlog" rows="4" class="block p-2.5 w-full text-md text-black bg-white rounded-lg border border-black focus:ring-black focus:border-black" placeholder="Write your thoughts here..."></textarea>
+                    <div id="editBlogError" class="hidden text-red-600 text-sm mt-1">Blog harus diisi dan minimal 10 karakter</div>
                     
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-10">Update</button>    
                 </form>
@@ -48,6 +50,15 @@
                 return;
             }
 
+            // Tambahkan event listener untuk validasi real-time
+            document.getElementById("editTitle").addEventListener("blur", function() {
+                validateForm("editTitle");
+            });
+
+            document.getElementById("editBlog").addEventListener("blur", function() {
+                validateForm("editBlog");
+            });
+
             document.getElementById("editform").addEventListener("submit", function (e) {
                 e.preventDefault();
                 console.log("Form submitted");
@@ -55,8 +66,12 @@
                 const newTitle = document.getElementById("editTitle").value.trim();
                 const newBlog = document.getElementById("editBlog").value.trim();
                 
-                if (!newTitle || !newBlog) {
-                    alert("Title dan blog tidak boleh kosong!");
+                // Validasi sebelum submit
+                const isTitleValid = validateForm("editTitle");
+                const isBlogValid = validateForm("editBlog");
+                
+                if (!isTitleValid || !isBlogValid) {
+                    alert("Title dan Blog harus diisi terlebih dahulu!");
                     return;
                 }
                 
@@ -71,7 +86,7 @@
                     localStorage.setItem("Blog", JSON.stringify(updatedBlogs));
                     localStorage.removeItem("editId");
                     
-                    alert("Blog berhasil diupdate!");
+                    alert("Menyimpan perubahan...");
                     console.log("Redirecting to index.html");
                     window.location.href = "index.html";
                 } else {
@@ -79,6 +94,34 @@
                 }
             });
         });
+
+        function validateForm(fieldId){
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+            const errorElement = document.getElementById(fieldId + "Error");
+
+            if(value === ""){
+                field.style.borderColor = "red";
+                field.style.borderWidth = "2px";
+                errorElement.classList.remove("hidden");
+                return false;
+            }else if(fieldId === "editTitle" && value.length < 3){
+                field.style.borderColor = "red";
+                field.style.borderWidth = "2px";
+                errorElement.classList.remove("hidden");
+                return false;
+            }else if(fieldId === "editBlog" && value.length < 10){
+                field.style.borderColor = "red";
+                field.style.borderWidth = "2px";
+                errorElement.classList.remove("hidden");
+                return false;
+            }else{
+                field.style.borderColor = "black";
+                field.style.borderWidth = "1px";
+                errorElement.classList.add("hidden");
+                return true;
+            }
+        }
     </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Document</title>
+    <title>Upload</title>
 </head>
 <body>
     <!-- <p>halo disini adalah halaman untuk upload</p> -->
@@ -16,10 +16,12 @@
             </div>
                 <form action="" id="Upload">
                     <label for="message" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Title</label>
-                    <input type="title" name="title" id="title" aria-describedby="helper-text-explanation" class="bg-white border border-black text-black text-md rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-gray-500 dark:text-black dark:focus:ring-black dark:focus:border-black" placeholder="your title...">
+                    <input type="title" name="title" id="title" required aria-describedby="helper-text-explanation" class="bg-white border border-black text-black text-md rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-gray-500 dark:text-black dark:focus:ring-black dark:focus:border-black" placeholder="your title...">
+                    <div id="titleError" class="text-red-600 text-sm mt-1 hidden">Title minimal 3 karakter</div>
 
                     <label for="message" class="block mb-2 text-lg font-medium text-gray-900 dark:text-black mt-10">Your blog</label>
-                    <textarea id="blog" name="blog" type="blog" rows="4" class="block p-2.5 w-full text-md text-black bg-white rounded-lg border border-black focus:ring-black focus:border-black" placeholder="Write your thoughts here..."></textarea>
+                    <textarea id="blog" name="blog" type="blog" rows="4" required class="block p-2.5 w-full text-md text-black bg-white rounded-lg border border-black focus:ring-black focus:border-black" placeholder="Write your thoughts here..."></textarea>
+                    <div id="blogError" class="text-red-600 text-sm mt-1 hidden">Blog minimal 10 karakter</div>
                     
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-10">Upload</button>    
                 </form>
@@ -29,32 +31,91 @@
 
     <script>
         let uploadBlog = document.getElementById("Upload")
-            uploadBlog.addEventListener("submit", (e)=>{
-                e.preventDefault()
+        
+        uploadBlog.addEventListener("submit", (e)=>{
+            e.preventDefault()
 
-                const title = document.getElementById("title").value;
-                const blog = document.getElementById("blog").value;
+            const title = document.getElementById("title").value.trim();
+            const blog = document.getElementById("blog").value.trim();
 
-                const existingBlog = JSON.parse(localStorage.getItem("Blog")) || [];
+            // Validasi form
+            if(title === "" || blog === ""){
+                alert("Title dan blog tidak boleh kosong!");
+                return false;
+            }
 
-                let newId = 1;
-                if (existingBlog.length > 0) {
-                    const lastId = Math.max(...existingBlog.map(b => b.id || 0));
-                    newId = lastId + 1;
-                }
+            // Validasi tambahan untuk memastikan tidak hanya spasi
+            if(title.length < 3 || blog.length < 10){
+                alert("Title minimal 3 karakter dan blog minimal 10 karakter!");
+                return false;
+            }
 
-                const newBlog ={
-                    id: newId,
-                    title: title,
-                    blog: blog,
-                }
+            const existingBlog = JSON.parse(localStorage.getItem("Blog")) || [];
 
-                existingBlog.push(newBlog);
-                localStorage.setItem("Blog", JSON.stringify(existingBlog));
-                document.getElementById("Upload").reset();
+            let newId = 1;
+            if (existingBlog.length > 0) {
+                const lastId = Math.max(...existingBlog.map(b => b.id || 0));
+                newId = lastId + 1;
+            }
 
-                alert("berhasil menambahkan blog");
-            })
+            const newBlog ={
+                id: newId,
+                title: title,
+                blog: blog,
+            }
+
+            existingBlog.push(newBlog);
+            localStorage.setItem("Blog", JSON.stringify(existingBlog));
+            document.getElementById("Upload").reset();
+
+            alert("Berhasil menambahkan blog!");
+        })
+
+        function validateField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+            const errorElement = document.getElementById(fieldId + "Error");
+            
+            if (value === "") {
+                field.style.borderColor = "red";
+                field.style.borderWidth = "2px";
+                errorElement.classList.remove("hidden");
+            } else if (fieldId === "title" && value.length < 3) {
+                field.style.borderColor = "red";
+                field.style.borderWidth = "2px";
+                errorElement.classList.remove("hidden");
+            } else if (fieldId === "blog" && value.length < 10) {
+                field.style.borderColor = "red";
+                field.style.borderWidth = "2px";
+                errorElement.classList.remove("hidden");
+            } else {
+                field.style.borderColor = "black";
+                field.style.borderWidth = "1px";
+                errorElement.classList.add("hidden");
+            }
+        }
+
+        document.getElementById("title").addEventListener("input", () => validateField("title"));
+        document.getElementById("blog").addEventListener("input", () => validateField("blog"));
+
+        function checkFormValidity() {
+            const title = document.getElementById("title").value.trim();
+            const blog = document.getElementById("blog").value.trim();
+            const submitButton = document.querySelector('button[type="submit"]');
+            
+            if (title !== "" && blog !== "" && title.length >= 3 && blog.length >= 10) {
+                submitButton.disabled = false;
+                submitButton.style.opacity = "1";
+            } else {
+                submitButton.disabled = true;
+                submitButton.style.opacity = "0.5";
+            }
+        }
+
+        document.getElementById("title").addEventListener("input", checkFormValidity);
+        document.getElementById("blog").addEventListener("input", checkFormValidity);
+
+        checkFormValidity();
     </script>
     
 </body>

@@ -4,23 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
     <!-- <p>halo disini adalah halaman home</p> -->
     <div class="border h-15 m-5 shadow-xl  rounded-lg flex justify-center items-center gap-10">
         <a href="index.html" class="text-lg font-bold">Home</a>
         <a href="upload.html" class="text-lg font-bold">Upload</a>
+        <button onclick="logout()" class="text-lg font-bold text-red-600">Logout</button>
     </div>
 
     <div class="border shadow-xl  h-20 m-5 rounded-lg flex items-center p-10">
-        <p class="text-2xl font-bold">Muhammad</p>
+        <p class="text-2xl font-bold" id="userName">Muhammad</p>
     </div>
 
     <div class="flex flex-col" id="cardblog">
     </div>
 
     <script>
+        function tampilkanNama() {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            const userNameElement = document.getElementById("userName");
+            
+            if (currentUser && currentUser.username) {
+                userNameElement.textContent = currentUser.username;
+            } else {
+                userNameElement.textContent = "Guest";
+            }
+        }
+        tampilkanNama();
+
+        function refreshPage() {
+            location.reload();
+        }
+
         function display(){
             console.log("chek",localStorage.getItem("Blog"));
 
@@ -59,10 +76,10 @@
                 return;
             }
 
-            if (confirm(`Apakah ada yakin ingin menghapus ${Blogtodelete}?`)) {
+            if (confirm(`Apakah ada yakin ingin menghapus ${Blogtodelete.title}?`)) {
                 const element = document.getElementById(id);
                 if (element) {
-                    element.remove
+                    element.remove();
                 }
 
                 const updatedBlogs = blogs.filter(blog => blog.id != id);
@@ -71,6 +88,12 @@
                 alert(`Blog ${Blogtodelete.title} berhasil dihapus`);
                 console.log(`Blog dengan ID ${id} berhasil dihapus`);
             }
+        }
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+            alert("Logout berhasil");
+            window.location.href = "user/login.html";
         }
     </script>
 
