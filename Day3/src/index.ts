@@ -42,20 +42,21 @@ function createAMD(prosesor: AMD): void{
     );
 }
 
-const intelCoreI9 = {
+const intelCoreI9: Intel = {
     brand: "intel",
     basemodel: "core I5",
     clockSize:  12,
     modelname: "I9-137594HK",
+    coreTotal: "dual core",
     turboBoost: true,
 }
 
-const Ryzen9 = {
+const Ryzen9: AMD = {
     brand: "AMD",
     basemodel: "Ryzen 9",
     clockSize:  12,
     modelname: "9700XT",
-    Core : "multi core",
+    coreTotal: "multi core",
     precisionBoost: true,
 }
 

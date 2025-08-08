@@ -11,7 +11,10 @@
         <div class="border rounded-lg h-full p-10">
             <div class="flex justify-between items-center">
                 <p class="text-4xl font-bold">Edit</p>
-                <a href="index.html" class="font-medium">Kembali</a>
+                <a href="#" id="backLink" class="font-medium">Kembali</a>
+            </div>
+            <div id="blogInfo" class="mt-4 p-3 bg-gray-100 rounded-lg hidden">
+                <p class="text-sm text-gray-600">Blog oleh: <span id="authorName"></span></p>
             </div>
             <div id="formEdit">
                 <form action="" id="editform">
@@ -30,98 +33,8 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const blogs = JSON.parse(localStorage.getItem("Blog")) || [];
-            const editId = localStorage.getItem("editId");
-
-            console.log("Edit ID:", editId);
-            console.log("Blogs:", blogs);
-
-            const blogToEdit = blogs.find(b => b.id == editId);
-
-            if (blogToEdit) {
-                document.getElementById("editTitle").value = blogToEdit.title;
-                document.getElementById("editBlog").value = blogToEdit.blog;
-                console.log("Blog ditemukan :", blogToEdit);
-            } else {
-                console.log("Blog tidak ditemukan");
-                alert("Blog tidak ditemukan!");
-                window.location.href = "index.html";
-                return;
-            }
-
-            // Tambahkan event listener untuk validasi real-time
-            document.getElementById("editTitle").addEventListener("blur", function() {
-                validateForm("editTitle");
-            });
-
-            document.getElementById("editBlog").addEventListener("blur", function() {
-                validateForm("editBlog");
-            });
-
-            document.getElementById("editform").addEventListener("submit", function (e) {
-                e.preventDefault();
-                console.log("Form submitted");
-                
-                const newTitle = document.getElementById("editTitle").value.trim();
-                const newBlog = document.getElementById("editBlog").value.trim();
-                
-                // Validasi sebelum submit
-                const isTitleValid = validateForm("editTitle");
-                const isBlogValid = validateForm("editBlog");
-                
-                if (!isTitleValid || !isBlogValid) {
-                    alert("Title dan Blog harus diisi terlebih dahulu!");
-                    return;
-                }
-                
-                if (blogToEdit) {
-                    blogToEdit.title = newTitle;
-                    blogToEdit.blog = newBlog;
-                    
-                    const updatedBlogs = blogs.map(b => (b.id == editId ? blogToEdit : b));
-                    
-                    console.log("Updated blogs array:", updatedBlogs);
-                    
-                    localStorage.setItem("Blog", JSON.stringify(updatedBlogs));
-                    localStorage.removeItem("editId");
-                    
-                    alert("Menyimpan perubahan...");
-                    console.log("Redirecting to index.html");
-                    window.location.href = "index.html";
-                } else {
-                    alert("Blog tidak ditemukan!");
-                }
-            });
-        });
-
-        function validateForm(fieldId){
-            const field = document.getElementById(fieldId);
-            const value = field.value.trim();
-            const errorElement = document.getElementById(fieldId + "Error");
-
-            if(value === ""){
-                field.style.borderColor = "red";
-                field.style.borderWidth = "2px";
-                errorElement.classList.remove("hidden");
-                return false;
-            }else if(fieldId === "editTitle" && value.length < 3){
-                field.style.borderColor = "red";
-                field.style.borderWidth = "2px";
-                errorElement.classList.remove("hidden");
-                return false;
-            }else if(fieldId === "editBlog" && value.length < 10){
-                field.style.borderColor = "red";
-                field.style.borderWidth = "2px";
-                errorElement.classList.remove("hidden");
-                return false;
-            }else{
-                field.style.borderColor = "black";
-                field.style.borderWidth = "1px";
-                errorElement.classList.add("hidden");
-                return true;
-            }
-        }
     </script>
+
+    <script src="../edit.js"></script>
 </body>
 </html>

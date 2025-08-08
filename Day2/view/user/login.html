@@ -26,28 +26,7 @@
             </form>
         </div>
     </div>
-    <script>
-        const loginform = document.getElementById('loginform');
 
-        loginform.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-            const founderUser = existingUsers.find(user => user.username === username && user.password === password);
-
-            if(founderUser){
-                localStorage.setItem("currentUser", JSON.stringify(founderUser));
-                alert("login sukses");
-                window.location.href = "../index.html"
-            }else{
-                alert("username atau password salah");
-            }
-        });
-    </script>
-    <!-- <script src="../../index.js"></script> -->
+    <script src="../../login.js"></script>
 </body>
 </html>
